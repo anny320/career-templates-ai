@@ -1,0 +1,12 @@
+name = "career-templates-proxy"
+main = "worker.js"
+compatibility_date = "2026-06-01"
+
+# Created via: wrangler kv namespace create CT_RATE_LIMIT
+# Paste the returned id below.
+kv_namespaces = [
+  { binding = "CT_RATE_LIMIT", id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID" }
+]
+
+# ANTHROPIC_API_KEY is set separately as a secret, never written here:
+#   wrangler secret put ANTHROPIC_API_KEY
