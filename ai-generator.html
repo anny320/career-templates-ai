@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Career Template Generator | Career Templates</title>
+<meta name="description" content="Answer a few questions and get a personalized version of any career template — performance review, promotion email, growth plan, and more — written for your exact role and results.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  .gen-form{background:var(--white);border:1px solid var(--parchment-line);border-left:5px solid var(--teal);border-radius:var(--radius);padding:30px 32px;margin:30px 0;}
+  .gen-form label{display:block;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--teal);margin:18px 0 6px;}
+  .gen-form label:first-child{margin-top:0;}
+  .gen-form select, .gen-form input, .gen-form textarea{
+    width:100%;font-family:'Inter',sans-serif;font-size:0.95rem;padding:10px 12px;
+    border:1px solid var(--parchment-line);border-radius:var(--radius);background:#FBFAF7;color:var(--text);
+  }
+  .gen-form textarea{min-height:80px;resize:vertical;}
+  .gen-submit{
+    margin-top:22px;background:var(--amber);color:var(--ink);font-weight:700;border:none;
+    padding:13px 22px;border-radius:var(--radius);font-size:0.95rem;cursor:pointer;
+  }
+  .gen-submit:hover{background:var(--amber-deep);color:var(--white);}
+  .gen-submit:disabled{opacity:0.6;cursor:not-allowed;}
+  .gen-status{font-family:'IBM Plex Mono',monospace;font-size:0.82rem;color:var(--text-mute);margin-top:14px;min-height:1.2em;}
+  .gen-output{display:none;}
+  .gen-output .field-value{white-space:pre-wrap;}
+  .gen-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
+  .gen-actions button, .gen-actions a{
+    font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:600;
+    padding:9px 16px;border-radius:var(--radius);border:1px solid var(--parchment-line);
+    background:var(--white);color:var(--ink);cursor:pointer;text-decoration:none;
+  }
+  .gen-actions a.primary, .gen-actions button.primary{background:var(--ink);color:var(--white);border-color:var(--ink);}
+  .error-box{background:#FBEAEA;border:1px solid #E3B6B6;color:#8A2E2E;padding:14px 16px;border-radius:var(--radius);margin-top:14px;display:none;font-size:0.9rem;}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">Career<span>Templates</span></a>
+    <div class="crumb"><a href="index.html">Templates</a> / AI Generator</div>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <div class="eyebrow">AI tool · Free</div>
+    <h1 id="page-h1">AI Template Generator</h1>
+    <p class="dek" id="page-dek">Answer a few quick questions and get a complete, ready-to-use version of this template, written for your role and your results — not a generic fill-in-the-blank.</p>
+  </section>
+
+  <form class="gen-form" id="gen-form">
+    <label for="template-select">Which template</label>
+    <select id="template-select" required>
+      <option value="performance-review-template" data-title="Performance Review Template">Performance Review Template</option>
+      <option value="promotion-request-email" data-title="Promotion Request Email">Promotion Request Email</option>
+      <option value="career-growth-plan" data-title="Career Growth Plan">Career Growth Plan</option>
+      <option value="leadership-journal" data-title="Leadership Journal">Leadership Journal</option>
+      <option value="achievement-tracker" data-title="Achievement Tracker">Achievement Tracker</option>
+      <option value="manager-one-on-one-notes" data-title="Manager One-on-One Notes">Manager One-on-One Notes</option>
+      <option value="brag-document" data-title="Brag Document">Brag Document</option>
+      <option value="salary-negotiation-worksheet" data-title="Salary Negotiation Worksheet">Salary Negotiation Worksheet</option>
+      <option value="career-development-plan" data-title="Career Development Plan">Career Development Plan</option>
+      <option value="promotion-checklist" data-title="Promotion Checklist">Promotion Checklist</option>
+    </select>
+
+    <label for="role">Your role / title</label>
+    <input id="role" type="text" placeholder="e.g. Senior Product Manager" required>
+
+    <label for="target">Target role or goal (if applicable)</label>
+    <input id="target" type="text" placeholder="e.g. Director of Product, or 'no specific target yet'">
+
+    <label for="results">Your key results / responsibilities (1–3, brief)</label>
+    <textarea id="results" placeholder="e.g. Led migration that cut support tickets 50%; mentored 2 junior PMs; shipped X feature ahead of schedule" required></textarea>
+
+    <label for="tone">Tone</label>
+    <select id="tone">
+      <option value="professional and confident">Professional &amp; confident</option>
+      <option value="warm and conversational">Warm &amp; conversational</option>
+      <option value="formal and concise">Formal &amp; concise</option>
+    </select>
+
+    <button class="gen-submit" type="submit" id="gen-submit">Generate my template →</button>
+    <div class="gen-status" id="gen-status"></div>
+    <div class="gen-status" id="limit-notice" style="margin-top:2px;"></div>
+    <div class="error-box" id="gen-error"></div>
+  </form>
+
+  <article class="doc-card gen-output" id="gen-output" data-doc-id="GENERATED · PERSONAL">
+    <h3>Your personalized template</h3>
+    <div id="gen-output-body"></div>
+    <div class="gen-actions">
+      <button id="copy-btn">Copy to clipboard</button>
+      <a id="email-btn" class="primary" href="#">Email this to myself</a>
+      <button id="regen-btn">Generate again</button>
+    </div>
+  </article>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">© 2026 Career Templates. Free to use and edit.</div>
+</footer>
+
+<script>
+// Pre-select template from ?template=slug in the URL, and tailor headline.
+const params = new URLSearchParams(window.location.search);
+const presetSlug = params.get('template');
+const select = document.getElementById('template-select');
+if (presetSlug) {
+  const opt = select.querySelector(`option[value="${presetSlug}"]`);
+  if (opt) select.value = presetSlug;
+}
+function updateHeadline() {
+  const opt = select.options[select.selectedIndex];
+  const title = opt.dataset.title;
+  document.getElementById('page-h1').textContent = `AI ${title} Generator`;
+  document.title = `AI ${title} Generator | Career Templates`;
+}
+select.addEventListener('change', updateHeadline);
+updateHeadline();
+
+// ---- Daily generation limit (per browser, prevents casual API-credit drain) ----
+const DAILY_LIMIT = 3;
+const STORAGE_KEY = 'ct_gen_usage';
+
+function getUsage() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    const today = new Date().toISOString().slice(0, 10);
+    if (raw.date !== today) return { date: today, count: 0 };
+    return raw;
+  } catch {
+    return { date: new Date().toISOString().slice(0, 10), count: 0 };
+  }
+}
+function setUsage(usage) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(usage)); } catch {}
+}
+function remainingToday() {
+  return Math.max(0, DAILY_LIMIT - getUsage().count);
+}
+function renderLimitNotice() {
+  const left = remainingToday();
+  const notice = document.getElementById('limit-notice');
+  if (left <= 0) {
+    notice.textContent = `You've used today's ${DAILY_LIMIT} free generations. Come back tomorrow for more.`;
+    submitBtn.disabled = true;
+  } else {
+    notice.textContent = `${left} of ${DAILY_LIMIT} free generations left today.`;
+    submitBtn.disabled = false;
+  }
+}
+
+// ---- Generation ----
+const form = document.getElementById('gen-form');
+const statusEl = document.getElementById('gen-status');
+const errorEl = document.getElementById('gen-error');
+const outputCard = document.getElementById('gen-output');
+const outputBody = document.getElementById('gen-output-body');
+const submitBtn = document.getElementById('gen-submit');
+
+renderLimitNotice();
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  errorEl.style.display = 'none';
+  outputCard.style.display = 'none';
+
+  if (remainingToday() <= 0) {
+    errorEl.textContent = `You've reached today's free limit of ${DAILY_LIMIT} generations. Please come back tomorrow.`;
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  submitBtn.disabled = true;
+  statusEl.textContent = 'Generating your template…';
+
+  const opt = select.options[select.selectedIndex];
+  const templateTitle = opt.dataset.title;
+  const role = document.getElementById('role').value.trim();
+  const target = document.getElementById('target').value.trim();
+  const results = document.getElementById('results').value.trim();
+  const tone = document.getElementById('tone').value;
+
+  const prompt = `Write a personalized "${templateTitle}" for this person. Return ONLY clean HTML fragments (no <html>/<head>/<body> tags) using this exact pattern for each section, ready to inject into a page:
+
+<div class="field"><span class="field-label">SECTION NAME</span><div class="field-value">the actual filled-in content, no placeholder brackets — write it for real using the details below</div></div>
+
+Person's role: ${role}
+Target role/goal: ${target || 'not specified — infer something reasonable'}
+Key results/responsibilities: ${results}
+Tone: ${tone}
+
+Produce 3-6 sections appropriate for a "${templateTitle}". Write complete, specific, ready-to-use content — not a fill-in-the-blank template. No commentary before or after the HTML.`;
+
+  // CHANGE THIS to your deployed worker URL, e.g.
+  // https://career-templates-proxy.YOURNAME.workers.dev
+  const WORKER_URL = "https://career-templates-proxy.YOURNAME.workers.dev";
+
+  try {
+    const response = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || `Request failed: ${response.status}`);
+    }
+    const text = (data.content || [])
+      .filter(b => b.type === 'text')
+      .map(b => b.text)
+      .join('\n')
+      .replace(/^```html\s*|```$/g, '')
+      .trim();
+
+    outputBody.innerHTML = text;
+    outputCard.style.display = 'block';
+    outputCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    statusEl.textContent = 'Done.';
+
+    const usage = getUsage();
+    usage.count += 1;
+    setUsage(usage);
+    renderLimitNotice();
+
+    const emailBody = encodeURIComponent(outputBody.innerText + `\n\n— Generated at Career Templates`);
+    document.getElementById('email-btn').href =
+      `mailto:?subject=${encodeURIComponent('My ' + templateTitle)}&body=${emailBody}`;
+  } catch (err) {
+    console.error(err);
+    errorEl.textContent = err.message && err.message.includes('limit')
+      ? err.message
+      : 'Something went wrong generating your template. Please try again in a moment.';
+    errorEl.style.display = 'block';
+    statusEl.textContent = '';
+  } finally {
+    if (remainingToday() > 0) submitBtn.disabled = false;
+  }
+});
+
+document.getElementById('copy-btn').addEventListener('click', () => {
+  navigator.clipboard.writeText(outputBody.innerText).then(() => {
+    statusEl.textContent = 'Copied to clipboard.';
+  });
+});
+
+document.getElementById('regen-btn').addEventListener('click', () => {
+  form.dispatchEvent(new Event('submit'));
+});
+</script>
+
+</body>
+</html>
