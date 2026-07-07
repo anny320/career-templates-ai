@@ -4,11 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Free Career Templates — Performance Reviews, Promotions & Growth Plans</title>
-<meta name="description" content="Free, editable career templates: performance reviews, promotion emails, brag documents, salary negotiation worksheets, and more. Try the AI version for one built around your own role.">
+<meta name="description" content="Free, editable career templates for every stage — cover letters for students, promotion emails for professionals. Try free today or join the AI waitlist.">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="landing.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-E57642RPD7"></script>
 <script>
@@ -17,41 +15,79 @@
   gtag('js', new Date());
   gtag('config', 'G-E57642RPD7');
 </script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  /* Fix eyebrow § symbol — only show on template pages, not landing */
+  .landing-eyebrow::before{content:none !important;}
+
+  /* Audience split section */
+  .audience-split{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:40px 0 8px;}
+  .audience-card{background:#fff;border:1px solid #E4DCC9;border-radius:2px;padding:24px;text-align:center;}
+  .audience-card .a-icon{margin:0 auto 14px;width:52px;height:52px;display:flex;align-items:center;justify-content:center;border-radius:50%;}
+  .audience-card.start .a-icon{background:#E8F7F4;}
+  .audience-card.up .a-icon{background:#FEF3E2;}
+  .audience-card h3{font-family:'Fraunces',serif;font-size:1.05rem;color:#1B2A4A;margin:0 0 6px;}
+  .audience-card p{font-size:0.88rem;color:#5B5D5F;margin:0 0 14px;}
+  .audience-card a{font-family:'IBM Plex Mono',monospace;font-size:0.75rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;text-decoration:none;}
+  .audience-card.start a{color:#3FA796;}
+  .audience-card.up a{color:#B96F25;}
+
+  /* Template grid with icons */
+  .hub-card .card-icon{width:36px;height:36px;margin-bottom:12px;display:block;}
+  .hub-card h4{margin:0 0 5px;}
+  .hub-card p{margin:0 0 10px;}
+
+  /* How it works */
+  .how-it-works{margin:52px 0;text-align:center;}
+  .how-it-works h2{font-family:'Fraunces',serif;font-size:1.55rem;color:#1B2A4A;margin:0 0 32px;}
+  .steps-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .step-bubble{position:relative;}
+  .step-bubble .num{width:40px;height:40px;border-radius:50%;background:#1B2A4A;color:#F7F3EC;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:0.85rem;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
+  .step-bubble h4{font-family:'Fraunces',serif;font-size:1rem;color:#1B2A4A;margin:0 0 6px;}
+  .step-bubble p{font-size:0.88rem;color:#5B5D5F;margin:0;}
+  .step-connector{display:none;}
+
+  @media(max-width:680px){
+    .audience-split{grid-template-columns:1fr;}
+    .steps-row{grid-template-columns:1fr;}
+  }
+</style>
 </head>
 <body>
 
 <header class="site-header">
   <div class="container">
     <a class="brand" href="index.html">Career<span>Templates</span></a>
-    <div class="crumb">Free, editable, no signup</div>
+    <div class="crumb">Free · No signup required</div>
   </div>
 </header>
 
 <!-- Waitlist banner -->
 <div class="waitlist-banner">
   <div class="container waitlist-banner-inner">
-    <span class="waitlist-label">🚀 AI versions are coming</span>
-    <span class="waitlist-text">Get early access — we'll notify you the moment the AI generator goes live.</span>
+    <span class="waitlist-label">🚀 AI versions coming soon</span>
+    <span class="waitlist-text">Be first — get notified the moment the AI generator goes live.</span>
     <a class="waitlist-btn" href="https://forms.gle/ukjq886ayT969M1T6" target="_blank" rel="noopener">Join the waitlist →</a>
   </div>
 </div>
 
 <main class="container">
 
+  <!-- HERO -->
   <section class="landing-hero">
     <div class="copy">
-      <div class="eyebrow">Template library · Free forever</div>
-      <h1>Your paperwork is the ladder.</h1>
-      <p class="dek">Performance reviews, promotion emails, growth plans — ten templates built for the exact moments your career actually turns on. Try one free today, or join the waitlist to get the AI version that writes it from your own results.</p>
+      <div class="landing-eyebrow eyebrow">Template library · Free forever</div>
+      <h1>The right words,<br>at the right moment.</h1>
+      <p class="dek">Whether you're writing your first cover letter or asking for a promotion — we have a free template for that. Fill it in yourself, or let the AI write it from your own experience.</p>
       <div class="hero-actions">
-        <a class="hero-btn-primary" href="promotion-request-email.html">Try a free template →</a>
-        <a class="hero-btn-secondary" href="https://forms.gle/ukjq886ayT969M1T6" target="_blank" rel="noopener">Join the AI waitlist</a>
+        <a class="hero-btn-primary" href="cover-letter-template.html">Starting out →</a>
+        <a class="hero-btn-secondary" href="promotion-request-email.html">Moving up →</a>
       </div>
-      <p class="hero-proof">10 templates · 3 free AI generations · AI versions coming soon</p>
       <div class="trust-badges">
-        <span>🔒 Your data stays private</span>
-        <span>⚡ Works in minutes</span>
-        <span>✓ Used before every review cycle</span>
+        <span>🔒 Private</span>
+        <span>⚡ Ready in minutes</span>
+        <span>✓ No signup</span>
       </div>
     </div>
 
@@ -63,8 +99,8 @@
         <div class="mini-line short"></div>
       </div>
       <div class="stair-card">
-        <span class="mini-tag">Worksheet</span>
-        <p class="mini-title">Salary Negotiation</p>
+        <span class="mini-tag">Letter</span>
+        <p class="mini-title">Cover Letter</p>
         <div class="mini-line"></div>
         <div class="mini-line short"></div>
       </div>
@@ -84,93 +120,180 @@
     </div>
   </section>
 
-  <section class="feature-trio">
-    <div class="feature-card">
-      <span class="f-mark">01 · No signup</span>
-      <h3>Copy and use today</h3>
-      <p>Every template is a real, fillable document — not a teaser behind an email gate.</p>
+  <!-- AUDIENCE SPLIT -->
+  <div class="audience-split">
+    <div class="audience-card start">
+      <div class="a-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="5" y="4" width="18" height="20" rx="2" stroke="#3FA796" stroke-width="1.8"/>
+          <path d="M9 10h10M9 14h10M9 18h6" stroke="#3FA796" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3>Starting out?</h3>
+      <p>Cover letters, cold emails, scholarship applications — templates for your first big steps.</p>
+      <a href="cover-letter-template.html">Try the cover letter →</a>
     </div>
-    <div class="feature-card">
-      <span class="f-mark">02 · Built for review season</span>
-      <h3>Written for the moment, not the calendar</h3>
-      <p>Each one matches an exact career moment: asking for more, proving your case, planning what's next.</p>
+    <div class="audience-card up">
+      <div class="a-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 20l5-6 4 3 7-10" stroke="#D98E3F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="22" cy="7" r="2.5" fill="#D98E3F"/>
+        </svg>
+      </div>
+      <h3>Moving up?</h3>
+      <p>Promotion emails, performance reviews, salary negotiations — templates for your next level.</p>
+      <a href="promotion-request-email.html">Try the promotion email →</a>
     </div>
-    <div class="feature-card">
-      <span class="f-mark">03 · AI personalization — coming soon</span>
-      <h3>Skip the fill-in-the-blank entirely</h3>
-      <p>Tell the AI your role and results — it writes the whole thing for you. Join the waitlist to get notified first.</p>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-it-works">
+    <h2>How it works</h2>
+    <div class="steps-row">
+      <div class="step-bubble">
+        <div class="num">01</div>
+        <h4>Pick your template</h4>
+        <p>Choose from 12 career documents — free, no account needed.</p>
+      </div>
+      <div class="step-bubble">
+        <div class="num">02</div>
+        <h4>Fill in your details</h4>
+        <p>Type your role, your results, your situation. The document builds itself as you type.</p>
+      </div>
+      <div class="step-bubble">
+        <div class="num">03</div>
+        <h4>Copy and send</h4>
+        <p>Hit copy. Paste into your email or doc. Done in under five minutes.</p>
+      </div>
     </div>
   </section>
 
+  <!-- TEMPLATE GRID -->
   <div class="section-head" id="library">
-    <div class="eyebrow">The library</div>
-    <h2>Ten templates, every career conversation</h2>
+    <div class="eyebrow landing-eyebrow">The library</div>
+    <h2 style="font-family:'Fraunces',serif;font-size:1.55rem;color:#1B2A4A;margin:8px 0 4px;">Every career conversation, covered</h2>
+    <p style="color:#5B5D5F;margin:0 0 24px;font-size:0.95rem;">2 templates available free now. 10 AI-powered versions coming soon.</p>
   </div>
 
   <div class="hub-grid">
-    <!-- Free now -->
+    <!-- FREE NOW -->
     <a class="hub-card hub-card--live" href="promotion-request-email.html">
+      <svg class="card-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="3" y="8" width="30" height="22" rx="2" stroke="#1B2A4A" stroke-width="1.6"/>
+        <path d="M3 10l15 11L33 10" stroke="#D98E3F" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
       <span class="tag">Email · Free now</span>
       <h4>Promotion Request Email</h4>
-      <p>Open the promotion conversation without sounding pushy. Fill in your details and your email is ready to send — no AI needed.</p>
-      <span class="soon-pill" style="border-color:var(--amber);color:var(--amber-deep);">Try it free →</span>
+      <p>Open the promotion conversation without sounding pushy.</p>
+      <span class="soon-pill" style="border-color:#D98E3F;color:#B96F25;">Try it free →</span>
     </a>
+
     <a class="hub-card hub-card--live" href="cover-letter-template.html">
+      <svg class="card-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="6" y="3" width="24" height="30" rx="2" stroke="#1B2A4A" stroke-width="1.6"/>
+        <path d="M11 11h14M11 16h14M11 21h9" stroke="#3FA796" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
       <span class="tag">Cover Letter · Free now</span>
       <h4>Job Application Cover Letter</h4>
-      <p>A professional cover letter for any job — fill in your details and it's ready to send. Great if you're just starting out.</p>
-      <span class="soon-pill" style="border-color:var(--amber);color:var(--amber-deep);">Try it free →</span>
+      <p>Professional, personal, ready to send — great if you're just starting out.</p>
+      <span class="soon-pill" style="border-color:#D98E3F;color:#B96F25;">Try it free →</span>
     </a>
-    <!-- Coming soon — 9 templates -->
+
+    <!-- COMING SOON -->
     <a class="hub-card hub-card--soon" href="https://forms.gle/ukjq886ayT969M1T6" target="_blank" rel="noopener">
+      <svg class="card-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="14" r="7" stroke="#9AA0A8" stroke-width="1.6"/>
+        <path d="M11 28c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="#9AA0A8" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
       <span class="tag soon-tag">Review · AI coming soon</span>
       <h4>Performance Review Template</h4>
       <p>Self-review and manager-review formats, ready to fill in.</p>
       <span class="soon-pill">Join waitlist</span>
     </a>
+
     <a class="hub-card hub-card--soon" href="https://forms.gle/ukjq886ayT969M1T6" target="_blank" rel="noopener">
+      <svg class="card-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 28l4-8 5 4 5-8 4 4 6-12" stroke="#9AA0A8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
       <span class="tag soon-tag">Plan · AI coming soon</span>
       <h4>Career Growth Plan</h4>
       <p>A 6–12 month plan mapped to skills, projects, and milestones.</p>
       <span class="soon-pill">Join waitlist</span>
     </a>
+
     <a class="hub-card hub-card--soon" href="https://forms.gle/ukjq886ayT969M1T6" target="_blank" rel="noopener">
+      <svg class="card-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 8h16M10 14h16M10 20h10" stroke="#9AA0A8" stroke-width="1.6" stroke-linecap="round"/>
+        <rect x="4" y="4" width="28" height="28" rx="2" stroke="#9AA0A8" stroke-width="1.6"/>
+      </svg>
       <span class="tag soon-tag">Journal · AI coming soon</span>
       <h4>Leadership Journal</h4>
       <p>Weekly prompts for tracking decisions and team patterns.</p>
       <span class="soon-pill">Join waitlist</span>
     </a>
+
     <a class="hub-card hub-card--soon" href="https://forms.gle/ukjq886ayT969M1T6" target="_blank" rel="noopener">
+      <svg class="card-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 28V16M14 28V10M20 28V14M26 28V6" stroke="#9AA0A8" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
       <span class="tag soon-tag">Tracker · AI coming soon</span>
       <h4>Achievement Tracker</h4>
       <p>A running log of wins, sorted by impact, ready for review season.</p>
       <span class="soon-pill">Join waitlist</span>
     </a>
+
     <a class="hub-card hub-card--soon" href="https://forms.gle/ukjq886ayT969M1T6" target="_blank" rel="noopener">
+      <svg class="card-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="10" r="5" stroke="#9AA0A8" stroke-width="1.6"/>
+        <path d="M8 30c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="#9AA0A8" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M14 22l4 4 4-4" stroke="#9AA0A8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
       <span class="tag soon-tag">Notes · AI coming soon</span>
       <h4>Manager 1:1 Notes</h4>
       <p>A repeatable structure so nothing important gets dropped.</p>
       <span class="soon-pill">Join waitlist</span>
     </a>
+
     <a class="hub-card hub-card--soon" href="https://forms.gle/ukjq886ayT969M1T6" target="_blank" rel="noopener">
+      <svg class="card-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 6l2.5 7.5H28l-6.5 4.5 2.5 7.5L18 21l-6 4.5 2.5-7.5L8 13.5h7.5L18 6z" stroke="#9AA0A8" stroke-width="1.6" stroke-linejoin="round"/>
+      </svg>
       <span class="tag soon-tag">Document · AI coming soon</span>
       <h4>Brag Document</h4>
       <p>Your accomplishments, organized so you stop forgetting them.</p>
       <span class="soon-pill">Join waitlist</span>
     </a>
+
     <a class="hub-card hub-card--soon" href="https://forms.gle/ukjq886ayT969M1T6" target="_blank" rel="noopener">
+      <svg class="card-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="18" r="12" stroke="#9AA0A8" stroke-width="1.6"/>
+        <path d="M14 18h8M18 14v8" stroke="#9AA0A8" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
       <span class="tag soon-tag">Worksheet · AI coming soon</span>
       <h4>Salary Negotiation Worksheet</h4>
       <p>Market data, your numbers, and your talking points in one place.</p>
       <span class="soon-pill">Join waitlist</span>
     </a>
+
     <a class="hub-card hub-card--soon" href="https://forms.gle/ukjq886ayT969M1T6" target="_blank" rel="noopener">
+      <svg class="card-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="4" width="28" height="28" rx="2" stroke="#9AA0A8" stroke-width="1.6"/>
+        <path d="M10 14l4 4 8-8" stroke="#9AA0A8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M10 22h12" stroke="#9AA0A8" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
       <span class="tag soon-tag">Plan · AI coming soon</span>
       <h4>Career Development Plan</h4>
       <p>The formal version your manager or HR will recognize.</p>
       <span class="soon-pill">Join waitlist</span>
     </a>
+
     <a class="hub-card hub-card--soon" href="https://forms.gle/ukjq886ayT969M1T6" target="_blank" rel="noopener">
+      <svg class="card-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 12l3 3 5-6" stroke="#9AA0A8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M10 20l3 3 5-6" stroke="#9AA0A8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M22 14h6M22 22h6" stroke="#9AA0A8" stroke-width="1.4" stroke-linecap="round"/>
+        <rect x="4" y="4" width="28" height="28" rx="2" stroke="#9AA0A8" stroke-width="1.6"/>
+      </svg>
       <span class="tag soon-tag">Checklist · AI coming soon</span>
       <h4>Promotion Checklist</h4>
       <p>Everything to have ready before you ask.</p>
@@ -178,10 +301,11 @@
     </a>
   </div>
 
+  <!-- FOOTER CTA -->
   <section class="footer-cta">
     <div class="cta-eyebrow">Be ready. Be clear. Get rewarded.</div>
-    <h2>Better documents. Better conversations. Better career.</h2>
-    <p>Join the waitlist — we'll send one email when the AI generator goes live. No spam, no drip sequence.</p>
+    <h2>Better documents.<br>Better conversations. Better career.</h2>
+    <p>Join the waitlist — one email when the AI generator goes live. No spam, no drip sequence.</p>
     <a class="hero-btn-primary" href="https://forms.gle/ukjq886ayT969M1T6" target="_blank" rel="noopener">Join the waitlist →</a>
   </section>
 
