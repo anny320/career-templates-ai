@@ -37,12 +37,7 @@
 </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-E57642RPD7"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-E57642RPD7');
-</script>
+
 <style>
   :root{
     --ink:#1B2A4A;--ink-soft:#283B63;--parchment:#F7F3EC;--parchment-line:#E4DCC9;
@@ -235,64 +230,48 @@
   <div class="container">© 2026 Career Templates. Free to use and edit. · Built by <a href="https://wakaratech.com" target="_blank" rel="noopener" style="color:inherit;border-bottom:1px solid currentColor;">Wakara Technologies Limited</a></div>
 </footer>
 
+
+
 <script>
-const fields = {
-  manager: document.getElementById('f-manager'),
-  role:    document.getElementById('f-role'),
-  target:  document.getElementById('f-target'),
-  result:  document.getElementById('f-result'),
-  name:    document.getElementById('f-name'),
-};
-const outBody    = document.getElementById('out-body');
-const copyBtn    = document.getElementById('copy-btn');
-const emailBtn   = document.getElementById('email-btn');
-const copyConfirm = document.getElementById('copy-confirm');
+document.getElementById("generate-btn").addEventListener("click", function() {
+  var manager = document.getElementById("f-manager").value.trim() || "your manager";
+  var role    = document.getElementById("f-role").value.trim()    || "your current role";
+  var target  = document.getElementById("f-target").value.trim()  || "the next level";
+  var result  = document.getElementById("f-result").value.trim()  || "delivered strong results";
+  var name    = document.getElementById("f-name").value.trim()    || "your name";
 
-function val(id, fallback) {
-  const v = fields[id].value.trim();
-  return v || fallback;
-}
+  var lines = [
+    "Hi " + manager + ",",
+    "",
+    "I'd like to set up time to talk about my growth and a potential move to " + target + ".",
+    "",
+    "Over the past several months in my role as " + role + ", I've been taking on increasing scope and responsibility. One result I'm particularly proud of: I " + result + ".",
+    "",
+    "I'd love to walk through how my role has evolved and talk through what a promotion to " + target + " would look like — including what you'd want to see from me between now and the next review cycle.",
+    "",
+    "Could we grab 20-30 minutes this week or next?",
+    "",
+    "Thanks,",
+    name
+  ];
 
-function buildEmail() {
-  const manager = val('manager', '[Manager's name]');
-  const role    = val('role',    '[your current role]');
-  const target  = val('target',  '[target role/level]');
-  const result  = val('result',  '[your key result — add a number if you can]');
-  const name    = val('name',    '[your name]');
+  var email = lines.join("\n");
+  document.getElementById("out-body").textContent = email;
+  document.getElementById("email-btn").href = "mailto:?subject=" + encodeURIComponent("Time to talk about my role & next steps") + "&body=" + encodeURIComponent(email);
 
-  return `Hi ${manager},
+  var card = document.getElementById("output-card-wrap");
+  card.style.display = "block";
+  card.scrollIntoView({ behavior: "smooth", block: "start" });
+});
 
-I'd like to set up time to talk about my growth and a potential move to ${target}.
-
-Over the past several months in my role as ${role}, I've been taking on increasing scope and responsibility. One result I'm particularly proud of: I ${result}.
-
-I'd love to walk through how my role has evolved and talk through what a promotion to ${target} would look like — including what you'd want to see from me between now and the next review cycle.
-
-Could we grab 20–30 minutes this week or next?
-
-Thanks,
-${name}`;
-}
-
-function render() {
-  const text = buildEmail();
-  outBody.textContent = text;
-
-  const subject = encodeURIComponent('Time to talk about my role & next steps');
-  const body    = encodeURIComponent(text);
-  emailBtn.href = `mailto:?subject=${subject}&body=${body}`;
-}
-
-Object.values(fields).forEach(f => f.addEventListener('input', render));
-render();
-
-copyBtn.addEventListener('click', () => {
-  navigator.clipboard.writeText(buildEmail()).then(() => {
-    copyConfirm.textContent = '✓ Copied to clipboard';
-    setTimeout(() => copyConfirm.textContent = '', 2500);
+document.getElementById("copy-btn").addEventListener("click", function() {
+  var text = document.getElementById("out-body").textContent;
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(function() {
+    document.getElementById("copy-confirm").textContent = "Copied to clipboard!";
+    setTimeout(function() { document.getElementById("copy-confirm").textContent = ""; }, 2500);
   });
 });
 </script>
-
 </body>
 </html>
