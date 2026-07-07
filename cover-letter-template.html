@@ -158,13 +158,11 @@
       <option value="Kind regards,">Kind regards (semi-formal)</option>
       <option value="Warm regards,">Warm regards (friendly/semi-formal)</option>
     </select>
-    <div style="margin-top:18px;padding:12px 14px;background:#E8F7F4;border-radius:2px;font-size:0.85rem;color:#2A7A6A;font-family:'IBM Plex Mono',monospace;">
-      ✓ Your cover letter is building below as you type — scroll down to copy it
-    </div>
+    <button id="generate-btn" style="margin-top:22px;width:100%;background:#D98E3F;color:#1B2A4A;font-family:'Inter',sans-serif;font-weight:700;font-size:1rem;border:none;padding:15px 22px;border-radius:2px;cursor:pointer;">Generate my cover letter →</button>
   </div>
 
   <!-- Output -->
-  <div class="output-card">
+  <div class="output-card" id="output-card-wrap" style="display:none;">
     <h3>Your cover letter — ready to send</h3>
     <div class="email-preview" id="out-body"></div>
     <div class="output-actions">
@@ -289,14 +287,20 @@ function render() {
   f('email-btn').href = `mailto:?subject=${subject}&body=${encodeURIComponent(buildLetter())}`;
 }
 
-['f-name','f-hiringmanager','f-role','f-why','f-strength','f-extra','f-closing']
-  .forEach(id => f(id).addEventListener('input', render));
-render();
+document.getElementById('generate-btn').addEventListener('click', function() {
+  var text = buildLetter();
+  document.getElementById('out-body').textContent = text;
+  var subject = encodeURIComponent('Job Application — ' + (document.getElementById('f-role').value.trim() || 'Position'));
+  document.getElementById('email-btn').href = 'mailto:?subject=' + subject + '&body=' + encodeURIComponent(text);
+  var card = document.getElementById('output-card-wrap');
+  card.style.display = 'block';
+  card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
 
-f('copy-btn').addEventListener('click', () => {
-  navigator.clipboard.writeText(buildLetter()).then(() => {
-    f('copy-confirm').textContent = '✓ Copied to clipboard';
-    setTimeout(() => f('copy-confirm').textContent = '', 2500);
+document.getElementById('copy-btn').addEventListener('click', function() {
+  navigator.clipboard.writeText(document.getElementById('out-body').textContent).then(function() {
+    document.getElementById('copy-confirm').textContent = '✓ Copied to clipboard';
+    setTimeout(function(){ document.getElementById('copy-confirm').textContent = ''; }, 2500);
   });
 });
 </script>

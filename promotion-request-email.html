@@ -154,13 +154,11 @@
 
     <label for="f-name">Your name</label>
     <input id="f-name" type="text" placeholder="e.g. Anne" maxlength="60">
-    <div style="margin-top:18px;padding:12px 14px;background:#E8F7F4;border-radius:2px;font-size:0.85rem;color:#2A7A6A;font-family:'IBM Plex Mono',monospace;">
-      ✓ Your email is building below as you type — scroll down to copy it
-    </div>
+    <button id="generate-btn" style="margin-top:22px;width:100%;background:#D98E3F;color:#1B2A4A;font-family:'Inter',sans-serif;font-weight:700;font-size:1rem;border:none;padding:15px 22px;border-radius:2px;cursor:pointer;">Generate my email →</button>
   </div>
 
   <!-- Live output -->
-  <div class="output-card">
+  <div class="output-card" id="output-card-wrap" style="display:none;">
     <h3>Your email — ready to send</h3>
     <div class="subject-row">
       <span class="subject-label">Subject</span>
