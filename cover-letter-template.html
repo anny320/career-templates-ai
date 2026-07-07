@@ -241,60 +241,55 @@
 
 
 <script>
-document.getElementById('generate-btn').addEventListener('click', function() {
-  var name      = document.getElementById('f-name').value.trim()         || '[Your name]';
-  var manager   = document.getElementById('f-hiringmanager').value.trim();
-  var role      = document.getElementById('f-role').value.trim()          || '[role and company]';
-  var why       = document.getElementById('f-why').value.trim()           || '[why you want this role]';
-  var strength  = document.getElementById('f-strength').value.trim()      || '[your key experience]';
-  var extra     = document.getElementById('f-extra').value.trim();
-  var closing   = document.getElementById('f-closing').value;
+document.getElementById("generate-btn").addEventListener("click", function() {
+  var name      = document.getElementById("f-name").value.trim()          || "Your Name";
+  var manager   = document.getElementById("f-hiringmanager").value.trim() || "";
+  var role      = document.getElementById("f-role").value.trim()          || "the position";
+  var why       = document.getElementById("f-why").value.trim()           || "I am excited about this opportunity.";
+  var strength  = document.getElementById("f-strength").value.trim()      || "I have relevant experience for this role.";
+  var extra     = document.getElementById("f-extra").value.trim()         || "";
+  var closing   = document.getElementById("f-closing").value              || "Yours sincerely,";
 
-  var salutation = manager ? 'Dear ' + manager + ',' : 'Dear Hiring Manager,';
-  var date = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-  var extraPara = extra ? '
-In addition, ' + extra + '
-' : '';
+  var today = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  var salutation = manager ? "Dear " + manager + "," : "Dear Hiring Manager,";
+  var extraLine = extra ? ("\n" + extra + "\n") : "";
 
-  var letter = name + '
+  var lines = [
+    name,
+    "",
+    today,
+    "",
+    salutation,
+    "",
+    "Re: Application for " + role,
+    "",
+    "I am writing to express my interest in the above position. " + why,
+    "",
+    strength,
+    extraLine,
+    "I am eager to bring my skills and commitment to your team and would welcome the opportunity to discuss my application further. Please find my CV attached for your consideration.",
+    "",
+    closing,
+    name
+  ];
 
-' + date + '
+  var letter = lines.join("\n");
+  document.getElementById("out-body").textContent = letter;
 
-' + salutation + '
+  var subject = encodeURIComponent("Job Application — " + role);
+  document.getElementById("email-btn").href = "mailto:?subject=" + subject + "&body=" + encodeURIComponent(letter);
 
-'
-    + 'Re: Application for ' + role + '
-
-'
-    + 'I am writing to express my interest in the above position. ' + why + '
-
-'
-    + strength + '
-'
-    + extraPara + '
-'
-    + 'I am eager to bring my skills and commitment to your team and would welcome the opportunity to discuss my application further. Please find my CV attached for your consideration.
-
-'
-    + closing + '
-' + name;
-
-  document.getElementById('out-body').textContent = letter;
-  document.getElementById('email-btn').href = 'mailto:?subject='
-    + encodeURIComponent('Job Application — ' + role)
-    + '&body=' + encodeURIComponent(letter);
-
-  var card = document.getElementById('output-card-wrap');
-  card.style.display = 'block';
-  card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  var card = document.getElementById("output-card-wrap");
+  card.style.display = "block";
+  card.scrollIntoView({ behavior: "smooth", block: "start" });
 });
 
-document.getElementById('copy-btn').addEventListener('click', function() {
-  var text = document.getElementById('out-body').textContent;
+document.getElementById("copy-btn").addEventListener("click", function() {
+  var text = document.getElementById("out-body").textContent;
   if (!text) return;
   navigator.clipboard.writeText(text).then(function() {
-    document.getElementById('copy-confirm').textContent = '✓ Copied to clipboard';
-    setTimeout(function() { document.getElementById('copy-confirm').textContent = ''; }, 2500);
+    document.getElementById("copy-confirm").textContent = "Copied to clipboard!";
+    setTimeout(function() { document.getElementById("copy-confirm").textContent = ""; }, 2500);
   });
 });
 </script>
