@@ -4,37 +4,105 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Career Template Generator | Career Templates</title>
-<meta name="description" content="Answer a few questions and get a personalized version of any career template — performance review, promotion email, growth plan, and more — written for your exact role and results.">
+<meta name="description" content="Get a personalised promotion request email written for your exact role and results. Free — no signup required.">
 <meta name="robots" content="noindex">
 <link rel="stylesheet" href="styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
-  .gen-form{background:var(--white);border:1px solid var(--parchment-line);border-left:5px solid var(--teal);border-radius:var(--radius);padding:30px 32px;margin:30px 0;}
-  .gen-form label{display:block;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--teal);margin:18px 0 6px;}
+  /* ---- inline fallback styles so page works even if styles.css doesn't load locally ---- */
+  :root{
+    --ink:#1B2A4A;--ink-soft:#283B63;--parchment:#F7F3EC;--parchment-line:#E4DCC9;
+    --amber:#D98E3F;--amber-deep:#B96F25;--teal:#3FA796;--text:#1A1A1A;
+    --text-mute:#5B5D5F;--white:#FFFFFF;--radius:2px;
+  }
+  body{margin:0;font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.6;background:#F7F3EC;color:#1A1A1A;}
+  .container{max-width:880px;margin:0 auto;padding:0 24px;}
+  .site-header{background:#1B2A4A;padding:18px 0;border-bottom:3px solid #D98E3F;}
+  .site-header .container{display:flex;align-items:center;justify-content:space-between;}
+  .brand{font-family:'Fraunces',serif;font-size:1.15rem;color:#F7F3EC;text-decoration:none;}
+  .brand span{color:#D98E3F;}
+  .crumb{font-size:0.85rem;color:#C9D2E3;}
+  .crumb a{color:#C9D2E3;text-decoration:none;}
+
+  /* ---- waitlist notice ---- */
+  .waitlist-notice{
+    background:#1B2A4A;color:#F7F3EC;
+    border-radius:2px;padding:28px 32px;margin:0 0 32px;
+    display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+  }
+  .waitlist-notice .wn-copy{}
+  .waitlist-notice .wn-eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.07em;
+    text-transform:uppercase;color:#D98E3F;margin-bottom:6px;
+  }
+  .waitlist-notice h3{font-family:'Fraunces',serif;font-size:1.25rem;color:#fff;margin:0 0 6px;}
+  .waitlist-notice p{color:#C9D2E3;margin:0;font-size:0.92rem;}
+  .waitlist-notice .wn-btn{
+    background:#D98E3F;color:#1B2A4A;font-weight:700;padding:12px 22px;
+    border-radius:2px;text-decoration:none;white-space:nowrap;font-size:0.92rem;flex-shrink:0;
+  }
+  .waitlist-notice .wn-btn:hover{background:#B96F25;color:#fff;}
+
+  /* ---- available badge ---- */
+  .live-badge{
+    display:inline-flex;align-items:center;gap:6px;
+    background:#E8F7F4;border:1px solid #3FA796;color:#2A7A6A;
+    font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.05em;
+    text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:16px;
+  }
+  .live-dot{width:6px;height:6px;background:#3FA796;border-radius:50%;display:inline-block;}
+
+  /* ---- template select with status indicators ---- */
+  .template-status-list{display:grid;gap:8px;margin:16px 0 24px;}
+  .tpl-row{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:12px 14px;border-radius:2px;border:1px solid #E4DCC9;
+    background:#fff;cursor:pointer;transition:border-color 0.15s;
+  }
+  .tpl-row:hover{border-color:#D98E3F;}
+  .tpl-row.selected{border-color:#1B2A4A;border-left:4px solid #D98E3F;}
+  .tpl-row.coming-soon{opacity:0.65;cursor:default;}
+  .tpl-row.coming-soon:hover{border-color:#E4DCC9;}
+  .tpl-name{font-weight:600;color:#1B2A4A;font-size:0.95rem;}
+  .tpl-tag{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;letter-spacing:0.05em;text-transform:uppercase;}
+  .tpl-tag.live{color:#3FA796;}
+  .tpl-tag.soon{color:#9AA0A8;}
+
+  /* ---- form ---- */
+  .gen-form{background:#fff;border:1px solid #E4DCC9;border-left:5px solid #3FA796;border-radius:2px;padding:30px 32px;margin:0 0 30px;}
+  .gen-form label{display:block;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;color:#3FA796;margin:18px 0 6px;}
   .gen-form label:first-child{margin-top:0;}
-  .gen-form select, .gen-form input, .gen-form textarea{
-    width:100%;font-family:'Inter',sans-serif;font-size:0.95rem;padding:10px 12px;
-    border:1px solid var(--parchment-line);border-radius:var(--radius);background:#FBFAF7;color:var(--text);
-  }
+  .gen-form input,.gen-form textarea{width:100%;font-family:'Inter',sans-serif;font-size:0.95rem;padding:10px 12px;border:1px solid #E4DCC9;border-radius:2px;background:#FBFAF7;color:#1A1A1A;box-sizing:border-box;}
   .gen-form textarea{min-height:80px;resize:vertical;}
-  .gen-submit{
-    margin-top:22px;background:var(--amber);color:var(--ink);font-weight:700;border:none;
-    padding:13px 22px;border-radius:var(--radius);font-size:0.95rem;cursor:pointer;
-  }
-  .gen-submit:hover{background:var(--amber-deep);color:var(--white);}
+  .gen-submit{margin-top:22px;background:#D98E3F;color:#1B2A4A;font-weight:700;border:none;padding:13px 22px;border-radius:2px;font-size:0.95rem;cursor:pointer;}
+  .gen-submit:hover{background:#B96F25;color:#fff;}
   .gen-submit:disabled{opacity:0.6;cursor:not-allowed;}
-  .gen-status{font-family:'IBM Plex Mono',monospace;font-size:0.82rem;color:var(--text-mute);margin-top:14px;min-height:1.2em;}
-  .gen-output{display:none;}
-  .gen-output .field-value{white-space:pre-wrap;}
+  .gen-status{font-family:'IBM Plex Mono',monospace;font-size:0.82rem;color:#5B5D5F;margin-top:14px;min-height:1.2em;}
+  .limit-notice{font-family:'IBM Plex Mono',monospace;font-size:0.78rem;color:#5B5D5F;margin-top:4px;}
+  .error-box{background:#FBEAEA;border:1px solid #E3B6B6;color:#8A2E2E;padding:14px 16px;border-radius:2px;margin-top:14px;display:none;font-size:0.9rem;}
+
+  /* ---- output ---- */
+  .gen-output{display:none;background:#fff;border:1px solid #E4DCC9;border-left:5px solid #1B2A4A;border-radius:2px;padding:30px 32px;margin:0 0 30px;}
+  .gen-output h3{font-family:'Fraunces',serif;font-size:1.05rem;margin:0 0 18px;color:#1B2A4A;border-bottom:1px solid #E4DCC9;padding-bottom:10px;}
+  .field-value{font-family:'IBM Plex Mono',monospace;font-size:0.9rem;background:#FBFAF7;border:1px dashed #E4DCC9;padding:16px;border-radius:2px;white-space:pre-wrap;line-height:1.7;}
   .gen-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
-  .gen-actions button, .gen-actions a{
-    font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:600;
-    padding:9px 16px;border-radius:var(--radius);border:1px solid var(--parchment-line);
-    background:var(--white);color:var(--ink);cursor:pointer;text-decoration:none;
-  }
-  .gen-actions a.primary, .gen-actions button.primary{background:var(--ink);color:var(--white);border-color:var(--ink);}
-  .error-box{background:#FBEAEA;border:1px solid #E3B6B6;color:#8A2E2E;padding:14px 16px;border-radius:var(--radius);margin-top:14px;display:none;font-size:0.9rem;}
+  .gen-actions button,.gen-actions a{font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:600;padding:9px 16px;border-radius:2px;border:1px solid #E4DCC9;background:#fff;color:#1B2A4A;cursor:pointer;text-decoration:none;}
+  .gen-actions a.primary,.gen-actions button.primary{background:#1B2A4A;color:#fff;border-color:#1B2A4A;}
+
+  /* ---- coming soon state ---- */
+  .coming-soon-state{display:none;background:#fff;border:1px solid #E4DCC9;border-left:5px solid #3FA796;border-radius:2px;padding:36px 32px;margin:0 0 30px;text-align:center;}
+  .coming-soon-state h3{font-family:'Fraunces',serif;font-size:1.3rem;color:#1B2A4A;margin:0 0 10px;}
+  .coming-soon-state p{color:#5B5D5F;max-width:440px;margin:0 auto 22px;}
+  .coming-soon-state .cs-btn{display:inline-block;background:#D98E3F;color:#1B2A4A;font-weight:700;padding:13px 24px;border-radius:2px;text-decoration:none;font-size:0.95rem;}
+  .coming-soon-state .cs-btn:hover{background:#B96F25;color:#fff;}
+  .coming-soon-state .cs-note{margin-top:14px;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:#9AA0A8;}
+
+  .site-footer{margin-top:48px;padding:28px 0 40px;border-top:1px solid #E4DCC9;color:#5B5D5F;font-size:0.85rem;}
+  .hero{padding:48px 0 8px;}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;color:#B96F25;}
+  h1{font-family:'Fraunces',serif;font-weight:600;font-size:2.2rem;line-height:1.12;margin:14px 0 12px;color:#1B2A4A;}
+  .dek{font-size:1.05rem;color:#5B5D5F;max-width:600px;margin:0 0 28px;}
 </style>
 </head>
 <body>
@@ -49,159 +117,222 @@
 <main class="container">
 
   <section class="hero">
-    <div class="eyebrow">AI tool · Free</div>
+    <div class="eyebrow">AI tool · Free · 3 generations/day</div>
     <h1 id="page-h1">AI Template Generator</h1>
-    <p class="dek" id="page-dek">Answer a few quick questions and get a complete, ready-to-use version of this template, written for your role and your results — not a generic fill-in-the-blank.</p>
+    <p class="dek">Tell us your role and results — get a complete, ready-to-use career document written for your exact situation.</p>
   </section>
 
-  <form class="gen-form" id="gen-form">
-    <label for="template-select">Which template</label>
-    <select id="template-select" required>
-      <option value="performance-review-template" data-title="Performance Review Template">Performance Review Template</option>
-      <option value="promotion-request-email" data-title="Promotion Request Email">Promotion Request Email</option>
-      <option value="career-growth-plan" data-title="Career Growth Plan">Career Growth Plan</option>
-      <option value="leadership-journal" data-title="Leadership Journal">Leadership Journal</option>
-      <option value="achievement-tracker" data-title="Achievement Tracker">Achievement Tracker</option>
-      <option value="manager-one-on-one-notes" data-title="Manager One-on-One Notes">Manager One-on-One Notes</option>
-      <option value="brag-document" data-title="Brag Document">Brag Document</option>
-      <option value="salary-negotiation-worksheet" data-title="Salary Negotiation Worksheet">Salary Negotiation Worksheet</option>
-      <option value="career-development-plan" data-title="Career Development Plan">Career Development Plan</option>
-      <option value="promotion-checklist" data-title="Promotion Checklist">Promotion Checklist</option>
-    </select>
+  <!-- Waitlist notice — always visible, no CSS dependency -->
+  <div class="waitlist-notice">
+    <div class="wn-copy">
+      <div class="wn-eyebrow">🚀 More templates coming soon</div>
+      <h3>Be first when all 10 go live</h3>
+      <p>The Promotion Request Email is available now. The other 9 AI templates are in progress — join the waitlist for early access.</p>
+    </div>
+    <a class="wn-btn" href="https://forms.gle/ukjq886ayT969M1T6" target="_blank" rel="noopener">Join the waitlist →</a>
+  </div>
+
+  <!-- Template picker -->
+  <div class="eyebrow" style="margin-bottom:8px;">Choose a template</div>
+  <div class="template-status-list" id="tpl-list">
+    <div class="tpl-row selected" data-slug="promotion-request-email" data-live="true">
+      <span class="tpl-name">Promotion Request Email</span>
+      <span class="tpl-tag live">✓ Available now</span>
+    </div>
+    <div class="tpl-row coming-soon" data-slug="performance-review-template" data-live="false">
+      <span class="tpl-name">Performance Review Template</span>
+      <span class="tpl-tag soon">Coming soon</span>
+    </div>
+    <div class="tpl-row coming-soon" data-slug="career-growth-plan" data-live="false">
+      <span class="tpl-name">Career Growth Plan</span>
+      <span class="tpl-tag soon">Coming soon</span>
+    </div>
+    <div class="tpl-row coming-soon" data-slug="leadership-journal" data-live="false">
+      <span class="tpl-name">Leadership Journal</span>
+      <span class="tpl-tag soon">Coming soon</span>
+    </div>
+    <div class="tpl-row coming-soon" data-slug="achievement-tracker" data-live="false">
+      <span class="tpl-name">Achievement Tracker</span>
+      <span class="tpl-tag soon">Coming soon</span>
+    </div>
+    <div class="tpl-row coming-soon" data-slug="manager-one-on-one-notes" data-live="false">
+      <span class="tpl-name">Manager One-on-One Notes</span>
+      <span class="tpl-tag soon">Coming soon</span>
+    </div>
+    <div class="tpl-row coming-soon" data-slug="brag-document" data-live="false">
+      <span class="tpl-name">Brag Document</span>
+      <span class="tpl-tag soon">Coming soon</span>
+    </div>
+    <div class="tpl-row coming-soon" data-slug="salary-negotiation-worksheet" data-live="false">
+      <span class="tpl-name">Salary Negotiation Worksheet</span>
+      <span class="tpl-tag soon">Coming soon</span>
+    </div>
+    <div class="tpl-row coming-soon" data-slug="career-development-plan" data-live="false">
+      <span class="tpl-name">Career Development Plan</span>
+      <span class="tpl-tag soon">Coming soon</span>
+    </div>
+    <div class="tpl-row coming-soon" data-slug="promotion-checklist" data-live="false">
+      <span class="tpl-name">Promotion Checklist</span>
+      <span class="tpl-tag soon">Coming soon</span>
+    </div>
+  </div>
+
+  <!-- Live generator form (shown only for available templates) -->
+  <div class="gen-form" id="gen-form-wrap">
+    <div class="live-badge"><span class="live-dot"></span> Available now — uses 1 of your 3 free daily generations</div>
 
     <label for="role">Your role / title</label>
     <input id="role" type="text" placeholder="e.g. Senior Product Manager" required>
 
-    <label for="target">Target role or goal (if applicable)</label>
-    <input id="target" type="text" placeholder="e.g. Director of Product, or 'no specific target yet'">
+    <label for="target">Target role or goal</label>
+    <input id="target" type="text" placeholder="e.g. Director of Product">
 
-    <label for="results">Your key results / responsibilities (1–3, brief)</label>
-    <textarea id="results" placeholder="e.g. Led migration that cut support tickets 50%; mentored 2 junior PMs; shipped X feature ahead of schedule" required></textarea>
+    <label for="results">Your strongest result (specific, with a number if you can)</label>
+    <textarea id="results" placeholder="e.g. Led migration that cut support tickets by 50%; mentored 2 junior PMs"></textarea>
 
     <label for="tone">Tone</label>
-    <select id="tone">
+    <select id="tone" style="width:100%;font-family:'Inter',sans-serif;font-size:0.95rem;padding:10px 12px;border:1px solid #E4DCC9;border-radius:2px;background:#FBFAF7;color:#1A1A1A;">
       <option value="professional and confident">Professional &amp; confident</option>
       <option value="warm and conversational">Warm &amp; conversational</option>
       <option value="formal and concise">Formal &amp; concise</option>
     </select>
 
-    <button class="gen-submit" type="submit" id="gen-submit">Generate my template →</button>
+    <button class="gen-submit" id="gen-submit">Generate my template →</button>
     <div class="gen-status" id="gen-status"></div>
-    <div class="gen-status" id="limit-notice" style="margin-top:2px;"></div>
+    <div class="limit-notice" id="limit-notice"></div>
     <div class="error-box" id="gen-error"></div>
-  </form>
+  </div>
 
-  <article class="doc-card gen-output" id="gen-output" data-doc-id="GENERATED · PERSONAL">
-    <h3>Your personalized template</h3>
-    <div id="gen-output-body"></div>
+  <!-- Coming soon state (shown when a coming-soon template is selected) -->
+  <div class="coming-soon-state" id="coming-soon-state">
+    <h3 id="cs-title">This template is coming soon</h3>
+    <p>Join the waitlist and we'll email you the moment this AI template goes live. No spam — just the launch notification.</p>
+    <a class="cs-btn" href="https://forms.gle/ukjq886ayT969M1T6" target="_blank" rel="noopener">Join the waitlist →</a>
+    <p class="cs-note">Or try the Promotion Request Email — available now, free, no credits needed.</p>
+  </div>
+
+  <!-- Output -->
+  <div class="gen-output" id="gen-output">
+    <h3>Your personalised template</h3>
+    <div class="field-value" id="gen-output-body"></div>
     <div class="gen-actions">
       <button id="copy-btn">Copy to clipboard</button>
-      <a id="email-btn" class="primary" href="#">Email this to myself</a>
+      <a id="email-btn" class="primary" href="#">Open in email app</a>
       <button id="regen-btn">Generate again</button>
     </div>
-  </article>
+  </div>
 
 </main>
 
 <footer class="site-footer">
-  <div class="container">© 2026 Career Templates. Free to use and edit.</div>
+  <div class="container">© 2026 Career Templates. Free to use and edit. · Built by <a href="https://wakaratech.com" target="_blank" rel="noopener" style="color:inherit;border-bottom:1px solid currentColor;">Wakara Technologies Limited</a> · <a href="index.html" style="color:inherit;">Back to templates</a></div>
 </footer>
 
 <script>
-// Pre-select template from ?template=slug in the URL, and tailor headline.
+// ---- Template picker ----
+const rows = document.querySelectorAll('.tpl-row');
+const formWrap = document.getElementById('gen-form-wrap');
+const csState  = document.getElementById('coming-soon-state');
+const csTitle  = document.getElementById('cs-title');
+let selectedSlug = 'promotion-request-email';
+
+rows.forEach(row => {
+  row.addEventListener('click', () => {
+    const isLive = row.dataset.live === 'true';
+    rows.forEach(r => r.classList.remove('selected'));
+    row.classList.add('selected');
+    selectedSlug = row.dataset.slug;
+
+    if (isLive) {
+      formWrap.style.display = 'block';
+      csState.style.display = 'none';
+      document.getElementById('gen-output').style.display = 'none';
+    } else {
+      formWrap.style.display = 'none';
+      csState.style.display = 'block';
+      csTitle.textContent = row.querySelector('.tpl-name').textContent + ' — coming soon';
+      document.getElementById('gen-output').style.display = 'none';
+    }
+  });
+});
+
+// Pre-select from ?template= URL param
 const params = new URLSearchParams(window.location.search);
 const presetSlug = params.get('template');
-const select = document.getElementById('template-select');
 if (presetSlug) {
-  const opt = select.querySelector(`option[value="${presetSlug}"]`);
-  if (opt) select.value = presetSlug;
+  const match = document.querySelector(`.tpl-row[data-slug="${presetSlug}"]`);
+  if (match) match.click();
 }
-function updateHeadline() {
-  const opt = select.options[select.selectedIndex];
-  const title = opt.dataset.title;
-  document.getElementById('page-h1').textContent = `AI ${title} Generator`;
-  document.title = `AI ${title} Generator | Career Templates`;
-}
-select.addEventListener('change', updateHeadline);
-updateHeadline();
 
-// ---- Daily generation limit (per browser, prevents casual API-credit drain) ----
+// ---- Daily limit ----
 const DAILY_LIMIT = 3;
 const STORAGE_KEY = 'ct_gen_usage';
-
 function getUsage() {
   try {
     const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
     const today = new Date().toISOString().slice(0, 10);
     if (raw.date !== today) return { date: today, count: 0 };
     return raw;
-  } catch {
-    return { date: new Date().toISOString().slice(0, 10), count: 0 };
-  }
+  } catch { return { date: new Date().toISOString().slice(0, 10), count: 0 }; }
 }
-function setUsage(usage) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(usage)); } catch {}
-}
-function remainingToday() {
-  return Math.max(0, DAILY_LIMIT - getUsage().count);
-}
-function renderLimitNotice() {
-  const left = remainingToday();
-  const notice = document.getElementById('limit-notice');
+function setUsage(u) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(u)); } catch {} }
+function remaining() { return Math.max(0, DAILY_LIMIT - getUsage().count); }
+function renderLimit() {
+  const left = remaining();
+  const el = document.getElementById('limit-notice');
+  const btn = document.getElementById('gen-submit');
   if (left <= 0) {
-    notice.textContent = `You've used today's ${DAILY_LIMIT} free generations. Come back tomorrow for more.`;
-    submitBtn.disabled = true;
+    el.textContent = `Daily limit reached (${DAILY_LIMIT}/day). Come back tomorrow or join the waitlist for early access to more templates.`;
+    btn.disabled = true;
   } else {
-    notice.textContent = `${left} of ${DAILY_LIMIT} free generations left today.`;
-    submitBtn.disabled = false;
+    el.textContent = `${left} of ${DAILY_LIMIT} free generations left today.`;
+    btn.disabled = false;
   }
 }
+renderLimit();
 
-// ---- Generation ----
-const form = document.getElementById('gen-form');
-const statusEl = document.getElementById('gen-status');
-const errorEl = document.getElementById('gen-error');
-const outputCard = document.getElementById('gen-output');
-const outputBody = document.getElementById('gen-output-body');
-const submitBtn = document.getElementById('gen-submit');
+// ---- Generate ----
+const submitBtn   = document.getElementById('gen-submit');
+const statusEl    = document.getElementById('gen-status');
+const errorEl     = document.getElementById('gen-error');
+const outputCard  = document.getElementById('gen-output');
+const outputBody  = document.getElementById('gen-output-body');
+const WORKER_URL  = 'https://career-templates-proxy.anny320.workers.dev'; // update after wrangler deploy
 
-renderLimitNotice();
-
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
+document.getElementById('gen-submit').addEventListener('click', async () => {
   errorEl.style.display = 'none';
   outputCard.style.display = 'none';
 
-  if (remainingToday() <= 0) {
-    errorEl.textContent = `You've reached today's free limit of ${DAILY_LIMIT} generations. Please come back tomorrow.`;
+  if (remaining() <= 0) {
+    errorEl.textContent = `You've reached today's limit of ${DAILY_LIMIT} free generations. Come back tomorrow!`;
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  const role    = document.getElementById('role').value.trim();
+  const target  = document.getElementById('target').value.trim();
+  const results = document.getElementById('results').value.trim();
+  const tone    = document.getElementById('tone').value;
+
+  if (!role || !results) {
+    errorEl.textContent = 'Please fill in your role and at least one result before generating.';
     errorEl.style.display = 'block';
     return;
   }
 
   submitBtn.disabled = true;
-  statusEl.textContent = 'Generating your template…';
+  statusEl.textContent = 'Writing your template…';
 
-  const opt = select.options[select.selectedIndex];
-  const templateTitle = opt.dataset.title;
-  const role = document.getElementById('role').value.trim();
-  const target = document.getElementById('target').value.trim();
-  const results = document.getElementById('results').value.trim();
-  const tone = document.getElementById('tone').value;
+  const prompt = `Write a personalised "Promotion Request Email" for this person. Return ONLY clean HTML using this exact pattern for each section — no surrounding tags, no commentary:
 
-  const prompt = `Write a personalized "${templateTitle}" for this person. Return ONLY clean HTML fragments (no <html>/<head>/<body> tags) using this exact pattern for each section, ready to inject into a page:
-
-<div class="field"><span class="field-label">SECTION NAME</span><div class="field-value">the actual filled-in content, no placeholder brackets — write it for real using the details below</div></div>
+<div class="field"><span class="field-label">SECTION NAME</span><div class="field-value">the actual filled-in content — write it for real, no placeholder brackets</div></div>
 
 Person's role: ${role}
-Target role/goal: ${target || 'not specified — infer something reasonable'}
-Key results/responsibilities: ${results}
+Target role/goal: ${target || 'not specified'}
+Key results: ${results}
 Tone: ${tone}
 
-Produce 3-6 sections appropriate for a "${templateTitle}". Write complete, specific, ready-to-use content — not a fill-in-the-blank template. No commentary before or after the HTML.`;
-
-  // CHANGE THIS to your deployed worker URL, e.g.
-  // https://career-templates-proxy.YOURNAME.workers.dev
-  const WORKER_URL = "https://career-templates-proxy.YOURNAME.workers.dev";
+Produce 2 sections: Subject Line and Email Body. Write complete, specific, ready-to-send content.`;
 
   try {
     const response = await fetch(WORKER_URL, {
@@ -209,52 +340,44 @@ Produce 3-6 sections appropriate for a "${templateTitle}". Write complete, speci
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ prompt })
     });
-
     const data = await response.json();
+    if (!response.ok) throw new Error(data.error || `Error ${response.status}`);
 
-    if (!response.ok) {
-      throw new Error(data.error || `Request failed: ${response.status}`);
-    }
     const text = (data.content || [])
-      .filter(b => b.type === 'text')
-      .map(b => b.text)
-      .join('\n')
-      .replace(/^```html\s*|```$/g, '')
-      .trim();
+      .filter(b => b.type === 'text').map(b => b.text).join('\n')
+      .replace(/^```html\s*|```$/g, '').trim();
 
     outputBody.innerHTML = text;
     outputCard.style.display = 'block';
     outputCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
     statusEl.textContent = 'Done.';
 
-    const usage = getUsage();
-    usage.count += 1;
-    setUsage(usage);
-    renderLimitNotice();
+    const usage = getUsage(); usage.count += 1; setUsage(usage);
+    renderLimit();
 
-    const emailBody = encodeURIComponent(outputBody.innerText + `\n\n— Generated at Career Templates`);
+    const emailBody = encodeURIComponent(outputBody.innerText + '\n\n— Generated at Career Templates');
     document.getElementById('email-btn').href =
-      `mailto:?subject=${encodeURIComponent('My ' + templateTitle)}&body=${emailBody}`;
+      `mailto:?subject=${encodeURIComponent('Promotion request — ' + role)}&body=${emailBody}`;
+
   } catch (err) {
-    console.error(err);
-    errorEl.textContent = err.message && err.message.includes('limit')
-      ? err.message
-      : 'Something went wrong generating your template. Please try again in a moment.';
+    errorEl.textContent = err.message?.includes('limit') ? err.message
+      : 'Something went wrong. Please try again in a moment.';
     errorEl.style.display = 'block';
     statusEl.textContent = '';
   } finally {
-    if (remainingToday() > 0) submitBtn.disabled = false;
+    if (remaining() > 0) submitBtn.disabled = false;
   }
 });
 
 document.getElementById('copy-btn').addEventListener('click', () => {
   navigator.clipboard.writeText(outputBody.innerText).then(() => {
-    statusEl.textContent = 'Copied to clipboard.';
+    statusEl.textContent = '✓ Copied to clipboard';
+    setTimeout(() => statusEl.textContent = '', 2500);
   });
 });
 
 document.getElementById('regen-btn').addEventListener('click', () => {
-  form.dispatchEvent(new Event('submit'));
+  document.getElementById('gen-submit').click();
 });
 </script>
 
