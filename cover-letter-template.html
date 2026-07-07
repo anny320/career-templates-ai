@@ -137,14 +137,14 @@
     <input id="f-role" type="text" placeholder="e.g. Marketing Coordinator at ABC Company">
 
     <label for="f-why">Why do you want this specific role / company? (1–2 sentences)</label>
-    <textarea id="f-why" placeholder="e.g. I've followed ABC Company's work in sustainable packaging for two years and want to contribute to a team that's genuinely changing the industry."></textarea>
-    <p class="builder-hint">Be specific — "I've always loved marketing" is weak. "I want to work on your youth campaigns because I grew up in the community they serve" is strong.</p>
+    <textarea id="f-why" placeholder="e.g. I've followed ABC Company's graduate programme for two years — the focus on mentorship and real ownership from day one is exactly the environment I'm looking for."></textarea>
+    <p class="builder-hint">Tip: mention something specific about the company — a project, value, or programme you genuinely admire. This is the line that separates your letter from 90% of applicants.</p>
 
     <label for="f-strength">Your strongest relevant experience or skill (1–2 sentences)</label>
-    <textarea id="f-strength" placeholder="e.g. During my internship at XYZ, I managed our social media accounts and grew our Instagram following by 40% in three months."></textarea>
+    <textarea id="f-strength" placeholder="e.g. During my volunteer work at XYZ, I trained 12 new members and reduced onboarding time by half — or — I achieved a distinction in my final year project on customer service systems."></textarea>
 
     <label for="f-extra">One more thing you bring (optional — a second skill, achievement, or quality)</label>
-    <input id="f-extra" type="text" placeholder="e.g. I'm fluent in Swahili and English, which aligns with your East Africa expansion plans.">
+    <input id="f-extra" type="text" placeholder="e.g. I'm bilingual in French and English, I hold a first aid certificate, I founded my university's entrepreneurship club — anything relevant.">
 
     <label for="f-closing">How would you like to close?</label>
     <select id="f-closing">
@@ -245,14 +245,31 @@ document.getElementById("generate-btn").addEventListener("click", function() {
   var name      = document.getElementById("f-name").value.trim()          || "Your Name";
   var manager   = document.getElementById("f-hiringmanager").value.trim() || "";
   var role      = document.getElementById("f-role").value.trim()          || "the position";
-  var why       = document.getElementById("f-why").value.trim()           || "I am excited about this opportunity.";
-  var strength  = document.getElementById("f-strength").value.trim()      || "I have relevant experience for this role.";
+  var why       = document.getElementById("f-why").value.trim()           || "";
+  var strength  = document.getElementById("f-strength").value.trim()      || "";
   var extra     = document.getElementById("f-extra").value.trim()         || "";
   var closing   = document.getElementById("f-closing").value              || "Yours sincerely,";
 
   var today = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
   var salutation = manager ? "Dear " + manager + "," : "Dear Hiring Manager,";
-  var extraLine = extra ? ("\n" + extra + "\n") : "";
+
+  // Para 1 — strong opening hook: why this role/company
+  var para1 = why
+    ? why.charAt(0).toUpperCase() + why.slice(1) + " That is why I am applying for the " + role + "."
+    : "I am applying for the " + role + " because it aligns directly with the direction I am building toward.";
+
+  // Para 2 — evidence: lead with the result, then context
+  var para2 = strength
+    ? "To give you a sense of what I bring: " + strength.charAt(0).toLowerCase() + strength.slice(1) + "."
+    : "";
+
+  // Para 3 — extra skill, connected to value for them
+  var para3 = extra
+    ? extra.charAt(0).toUpperCase() + extra.slice(1) + " — something I believe would add direct value in this role."
+    : "";
+
+  // Para 4 — confident, specific close (no begging)
+  var close = "I would welcome the chance to talk through how my background fits what you are looking for. My CV is attached — I am happy to provide references or a portfolio on request.";
 
   var lines = [
     name,
@@ -263,20 +280,22 @@ document.getElementById("generate-btn").addEventListener("click", function() {
     "",
     "Re: Application for " + role,
     "",
-    "I am writing to express my interest in the above position. " + why,
-    "",
-    strength,
-    extraLine,
-    "I am eager to bring my skills and commitment to your team and would welcome the opportunity to discuss my application further. Please find my CV attached for your consideration.",
-    "",
-    closing,
-    name
+    para1,
+    ""
   ];
+
+  if (para2) { lines.push(para2); lines.push(""); }
+  if (para3) { lines.push(para3); lines.push(""); }
+
+  lines.push(close);
+  lines.push("");
+  lines.push(closing);
+  lines.push(name);
 
   var letter = lines.join("\n");
   document.getElementById("out-body").textContent = letter;
 
-  var subject = encodeURIComponent("Job Application — " + role);
+  var subject = encodeURIComponent("Application for " + role + " — " + name);
   document.getElementById("email-btn").href = "mailto:?subject=" + subject + "&body=" + encodeURIComponent(letter);
 
   var card = document.getElementById("output-card-wrap");
