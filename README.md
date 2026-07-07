@@ -84,7 +84,7 @@ This is just UX — it has no security value on its own, the Worker is what
 actually protects your credits.
 
 ## Before deploying
-- Replace `https://yourdomain.github.io/career-templates/` in each page's
+- Replace `https://anny320.github.io/career-templates-ai/` in each page's
   `<link rel="canonical">` with your real GitHub Pages URL.
 - Deploy the Worker (above) before pushing `ai-generator.html` live — otherwise
   the generator will fail since `WORKER_URL` still points at the placeholder.
@@ -97,3 +97,35 @@ actually protects your credits.
 The course picker calls the API live because every visitor's output is unique.
 These templates are evergreen — the same page should rank and load instantly for
 every visitor, so they're generated once at build time and committed as plain HTML.
+
+---
+
+## Product Notes
+
+### Expansion opportunity — "Starting Out" category
+*Logged: July 2026. Source: user feedback.*
+
+Current site targets mid-career professionals (Moving Up). User feedback surfaced a
+second underserved market: students, young professionals, and first-jobbers who need
+foundational career documents, not just advancement tools. Particularly relevant in
+African markets where, per South Africa's national literacy stats, email etiquette
+and professional writing are not taught or modelled consistently.
+
+**Potential "Starting Out" templates:**
+- Cover Letter for a Job
+- Cover Letter for a Scholarship
+- Cover Letter for a Conference / Fellowship
+- Cold Email to a Potential Mentor
+- Thank You Email After an Interview
+- Follow-Up Email After No Response
+- Introduction Email to a New Team
+- Professional Email Etiquette Guide
+
+**Search volume note:** "How to write a cover letter" has significantly higher search
+volume than "how to write a promotion email" — this category may outperform the
+current Moving Up set on organic traffic.
+
+**Decision (July 2026):** Add one Starting Out template to the current site to test
+demand — Job Application Cover Letter — before deciding whether to expand the category
+or spin it into a separate site. Build remaining Starting Out templates once the AI
+generator (Cloudflare Worker) is fully deployed.
