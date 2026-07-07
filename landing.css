@@ -4,6 +4,98 @@
    hero staircase + stamp signature, feature trio, footer CTA banner.
    =================================================================== */
 
+/* ---------- Trust badges ---------- */
+.trust-badges{
+  display:flex;
+  gap:18px;
+  flex-wrap:wrap;
+  margin-top:14px;
+  font-size:0.82rem;
+  color:var(--text-mute);
+}
+.trust-badges span{display:flex;align-items:center;gap:5px;}
+
+/* ---------- Waitlist banner (top of page) ---------- */
+.waitlist-banner{
+  background:var(--teal);
+  color:var(--white);
+  padding:12px 0;
+  font-size:0.88rem;
+}
+.waitlist-banner-inner{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.waitlist-label{
+  font-family:'IBM Plex Mono',monospace;
+  font-weight:700;
+  font-size:0.8rem;
+  letter-spacing:0.03em;
+  white-space:nowrap;
+}
+.waitlist-text{
+  flex:1;
+  min-width:180px;
+  opacity:0.92;
+}
+.waitlist-btn{
+  background:var(--white);
+  color:var(--teal);
+  font-weight:700;
+  padding:7px 16px;
+  border-radius:var(--radius);
+  text-decoration:none;
+  white-space:nowrap;
+  font-size:0.85rem;
+}
+.waitlist-btn:hover{background:var(--parchment);}
+
+/* ---------- Hub card states ---------- */
+.hub-card--live{
+  border-left-color:var(--amber);
+  position:relative;
+}
+.hub-card--live::after{
+  content:"✓ Available now";
+  position:absolute;
+  top:14px;
+  right:14px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:0.65rem;
+  letter-spacing:0.04em;
+  color:var(--amber-deep);
+  font-weight:700;
+}
+.hub-card--soon{
+  border-left-color:var(--parchment-line);
+  opacity:0.82;
+  position:relative;
+}
+.hub-card--soon:hover{
+  border-left-color:var(--teal);
+  opacity:1;
+}
+.soon-tag{color:var(--text-mute) !important;}
+.soon-pill{
+  display:inline-block;
+  margin-top:10px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:0.68rem;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  color:var(--teal);
+  border:1px solid var(--teal);
+  border-radius:20px;
+  padding:3px 10px;
+}
+
+@media (max-width:640px){
+  .waitlist-text{display:none;}
+  .waitlist-banner-inner{justify-content:space-between;}
+}
+
 @media (prefers-reduced-motion: no-preference){
   .stair-card{
     opacity:0;
