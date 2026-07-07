@@ -9,12 +9,7 @@
 <link rel="stylesheet" href="styles.css">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-E57642RPD7"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-E57642RPD7');
-</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
@@ -243,67 +238,65 @@
   <div class="container">© 2026 Career Templates. Free to use and edit. · Built by <a href="https://wakaratech.com" target="_blank" rel="noopener" style="color:inherit;border-bottom:1px solid currentColor;">Wakara Technologies Limited</a></div>
 </footer>
 
+
+
 <script>
-const f = id => document.getElementById(id);
-
-function buildLetter() {
-  const name     = f('f-name').value.trim() || '[Your name]';
-  const manager  = f('f-hiringmanager').value.trim();
-  const role     = f('f-role').value.trim() || '[role and company]';
-  const why      = f('f-why').value.trim() || '[why you want this role/company]';
-  const strength = f('f-strength').value.trim() || '[your key experience or skill]';
-  const extra    = f('f-extra').value.trim();
-  const closing  = f('f-closing').value;
-
-  const salutation = manager
-    ? `Dear ${manager},`
-    : `Dear Hiring Manager,`;
-
-  const extraPara = extra
-    ? `\nIn addition, ${extra}\n`
-    : '';
-
-  return `${name}
-
-${new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
-
-${salutation}
-
-Re: Application for ${role}
-
-I am writing to express my interest in the above position. ${why}
-
-${strength}
-${extraPara}
-I am eager to bring my skills and commitment to your team and would welcome the opportunity to discuss my application further. Please find my CV attached for your consideration.
-
-${closing}
-${name}`;
-}
-
-function render() {
-  f('out-body').textContent = buildLetter();
-  const subject = encodeURIComponent('Job Application — ' + (f('f-role').value.trim() || 'Position'));
-  f('email-btn').href = `mailto:?subject=${subject}&body=${encodeURIComponent(buildLetter())}`;
-}
-
 document.getElementById('generate-btn').addEventListener('click', function() {
-  var text = buildLetter();
-  document.getElementById('out-body').textContent = text;
-  var subject = encodeURIComponent('Job Application — ' + (document.getElementById('f-role').value.trim() || 'Position'));
-  document.getElementById('email-btn').href = 'mailto:?subject=' + subject + '&body=' + encodeURIComponent(text);
+  var name      = document.getElementById('f-name').value.trim()         || '[Your name]';
+  var manager   = document.getElementById('f-hiringmanager').value.trim();
+  var role      = document.getElementById('f-role').value.trim()          || '[role and company]';
+  var why       = document.getElementById('f-why').value.trim()           || '[why you want this role]';
+  var strength  = document.getElementById('f-strength').value.trim()      || '[your key experience]';
+  var extra     = document.getElementById('f-extra').value.trim();
+  var closing   = document.getElementById('f-closing').value;
+
+  var salutation = manager ? 'Dear ' + manager + ',' : 'Dear Hiring Manager,';
+  var date = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  var extraPara = extra ? '
+In addition, ' + extra + '
+' : '';
+
+  var letter = name + '
+
+' + date + '
+
+' + salutation + '
+
+'
+    + 'Re: Application for ' + role + '
+
+'
+    + 'I am writing to express my interest in the above position. ' + why + '
+
+'
+    + strength + '
+'
+    + extraPara + '
+'
+    + 'I am eager to bring my skills and commitment to your team and would welcome the opportunity to discuss my application further. Please find my CV attached for your consideration.
+
+'
+    + closing + '
+' + name;
+
+  document.getElementById('out-body').textContent = letter;
+  document.getElementById('email-btn').href = 'mailto:?subject='
+    + encodeURIComponent('Job Application — ' + role)
+    + '&body=' + encodeURIComponent(letter);
+
   var card = document.getElementById('output-card-wrap');
   card.style.display = 'block';
   card.scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
 document.getElementById('copy-btn').addEventListener('click', function() {
-  navigator.clipboard.writeText(document.getElementById('out-body').textContent).then(function() {
+  var text = document.getElementById('out-body').textContent;
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(function() {
     document.getElementById('copy-confirm').textContent = '✓ Copied to clipboard';
-    setTimeout(function(){ document.getElementById('copy-confirm').textContent = ''; }, 2500);
+    setTimeout(function() { document.getElementById('copy-confirm').textContent = ''; }, 2500);
   });
 });
 </script>
-
 </body>
 </html>
